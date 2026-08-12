@@ -15,8 +15,9 @@ import Slide6 from '../slides/Slide6';
 import Slide7 from '../slides/Slide7';
 import Slide8 from '../slides/Slide8';
 import Slide9 from '../slides/Slide9';
+import SlideVideo from '../slides/SlideVideo';
 
-const slides = [Slide0, Slide1, Slide2, Slide3, Slide4, Slide5, Slide6, Slide7, Slide8, Slide9];
+const slides = [Slide0, Slide1, Slide2, Slide3, Slide4, Slide5, Slide6, Slide7, Slide8, Slide9, SlideVideo];
 
 export default function Presentation() {
   const [currentSlide, setCurrentSlide] = useState(0);
