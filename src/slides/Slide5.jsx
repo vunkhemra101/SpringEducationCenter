@@ -49,7 +49,7 @@ export default function Slide5() {
         <motion.span
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="accent-pill mb-4 inline-flex"
+          className="accent-pill text-sm px-4 py-1.5 mb-4 inline-flex"
         >
           Scope
         </motion.span>
@@ -57,7 +57,7 @@ export default function Slide5() {
           initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="slide-title mt-3"
+          className="text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight mt-3"
         >
           What Should We Assess?
         </motion.h2>
@@ -65,36 +65,36 @@ export default function Slide5() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="slide-subtitle max-w-xl mx-auto mt-3"
+          className="text-xl text-gray-500 max-w-xl mx-auto mt-4"
         >
           Environmental assessment measures more than academic knowledge alone.
         </motion.p>
       </div>
 
       {/* 2×2 box grid */}
-      <div className="grid grid-cols-2 gap-4 max-w-3xl mx-auto w-full">
+      <div className="grid grid-cols-2 gap-5 max-w-4xl mx-auto w-full">
         {dimensions.map((d, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 + i * 0.1 }}
-            className={`clean-card p-6 flex flex-col gap-4 border ${d.border} group`}
+            className={`bg-white rounded-2xl border ${d.border} shadow-sm hover:shadow-md transition-all duration-300 p-7 flex flex-col gap-5 group`}
           >
             {/* Icon + tag row */}
             <div className="flex items-center justify-between">
-              <div className={`w-11 h-11 rounded-xl ${d.bg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                <d.icon className={`w-5 h-5 ${d.color}`} />
+              <div className={`w-14 h-14 rounded-2xl ${d.bg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                <d.icon className={`w-7 h-7 ${d.color}`} />
               </div>
-              <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${d.bg} ${d.color}`}>
+              <span className={`text-sm font-semibold px-3 py-1 rounded-full ${d.bg} ${d.color}`}>
                 {d.tag}
               </span>
             </div>
 
             {/* Text */}
             <div>
-              <p className="font-bold text-gray-800 text-base mb-1">{d.label}</p>
-              <p className="text-xs text-gray-500 leading-relaxed">{d.desc}</p>
+              <p className="font-extrabold text-gray-800 text-2xl mb-1.5">{d.label}</p>
+              <p className="text-base text-gray-500 leading-relaxed">{d.desc}</p>
             </div>
           </motion.div>
         ))}

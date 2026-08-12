@@ -13,7 +13,7 @@ export default function Slide0({ onNext }) {
         initial={{ opacity: 0, scale: 0.85 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="w-32 h-32 md:w-40 md:h-40 bg-white rounded-3xl shadow-lg border border-gray-100 flex items-center justify-center p-3 overflow-hidden"
+        className="w-44 h-44 md:w-52 md:h-52 bg-white rounded-3xl shadow-lg border border-gray-100 flex items-center justify-center p-4 overflow-hidden"
       >
         <img src={logoImage} alt="Spring Education Center Logo" className="w-full h-full object-contain" />
       </motion.div>
@@ -23,13 +23,13 @@ export default function Slide0({ onNext }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.15 }}
-        className="flex flex-col items-center gap-3"
+        className="flex flex-col items-center gap-4"
       >
-        <span className="accent-pill">Spring Education Center</span>
-        <h1 className="slide-title max-w-xl">
+        <span className="accent-pill text-sm px-4 py-1.5">Spring Education Center</span>
+        <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight max-w-2xl">
           Assessing <span className="text-eco-dark">Environmental</span> Learning
         </h1>
-        <p className="slide-subtitle max-w-sm">
+        <p className="text-xl text-gray-500 font-normal">
           Knowledge · Skills · Attitudes · Behavior
         </p>
       </motion.div>
@@ -39,15 +39,15 @@ export default function Slide0({ onNext }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className="flex flex-col items-center gap-4"
+        className="flex flex-col items-center gap-3"
       >
-        <div className="flex items-center gap-2 text-gray-400 text-sm font-medium">
-          <Users size={14} />
+        <div className="flex items-center gap-2 text-gray-400 text-base font-medium">
+          <Users size={16} />
           <span>Presentation Team</span>
         </div>
-        <div className="flex flex-wrap justify-center gap-2">
+        <div className="flex flex-wrap justify-center gap-3">
           {teamMembers.map((member, i) => (
-            <span key={i} className="px-4 py-1.5 rounded-full bg-white border border-gray-100 shadow-sm text-gray-700 font-medium text-sm">
+            <span key={i} className="px-5 py-2 rounded-full bg-white border border-gray-200 shadow-sm text-gray-700 font-semibold text-base">
               {member}
             </span>
           ))}
@@ -62,9 +62,9 @@ export default function Slide0({ onNext }) {
         whileHover={{ scale: 1.04 }}
         whileTap={{ scale: 0.96 }}
         onClick={onNext}
-        className="flex items-center gap-2 bg-eco-dark text-white text-sm font-semibold px-6 py-2.5 rounded-full shadow-lg shadow-eco-dark/20 hover:bg-eco-mid transition-colors"
+        className="flex items-center gap-2 bg-eco-dark text-white text-base font-semibold px-8 py-3 rounded-full shadow-lg shadow-eco-dark/20 hover:bg-eco-mid transition-colors"
       >
-        Start Presentation <ArrowRight size={15} />
+        Start Presentation <ArrowRight size={18} />
       </motion.button>
     </div>
   );
