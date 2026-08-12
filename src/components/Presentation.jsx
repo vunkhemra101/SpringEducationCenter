@@ -75,11 +75,11 @@ export default function Presentation() {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-10"
+          className="absolute inset-0 w-full h-full object-cover z-0 opacity-40"
           src="/bg-video.mp4"
         />
         {/* Overlay to keep content readable */}
-        <div className="absolute inset-0 bg-white/85 z-0" />
+        <div className="absolute inset-0 bg-white/55 z-0" />
 
         <AnimatePresence mode="wait">
           <motion.div
