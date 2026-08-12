@@ -16,108 +16,66 @@ import Slide7 from '../slides/Slide7';
 import Slide8 from '../slides/Slide8';
 import Slide9 from '../slides/Slide9';
 
-const slides = [
-  Slide0,
-  Slide1,
-  Slide2,
-  Slide3,
-  Slide4,
-  Slide5,
-  Slide6,
-  Slide7,
-  Slide8,
-  Slide9
-];
+const slides = [Slide0, Slide1, Slide2, Slide3, Slide4, Slide5, Slide6, Slide7, Slide8, Slide9];
 
 export default function Presentation() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const containerRef = useRef(null);
 
-  const handleNext = useCallback(() => {
-    setCurrentSlide(prev => Math.min(prev + 1, slides.length - 1));
-  }, []);
-
-  const handlePrev = useCallback(() => {
-    setCurrentSlide(prev => Math.max(prev - 1, 0));
-  }, []);
-
-  const handleGoTo = useCallback((index) => {
-    setCurrentSlide(index);
-  }, []);
+  const handleNext = useCallback(() => setCurrentSlide(prev => Math.min(prev + 1, slides.length - 1)), []);
+  const handlePrev = useCallback(() => setCurrentSlide(prev => Math.max(prev - 1, 0)), []);
+  const handleGoTo = useCallback((index) => setCurrentSlide(index), []);
 
   const toggleFullscreen = async () => {
     if (!document.fullscreenElement) {
-      try {
-        await containerRef.current.requestFullscreen();
-        setIsFullscreen(true);
-      } catch (err) {
-        console.error(`Error attempting to enable full-screen mode: ${err.message}`);
-      }
+      try { await containerRef.current.requestFullscreen(); setIsFullscreen(true); }
+      catch (err) { console.error(err.message); }
     } else {
-      if (document.exitFullscreen) {
-        await document.exitFullscreen();
-        setIsFullscreen(false);
-      }
+      await document.exitFullscreen(); setIsFullscreen(false);
     }
   };
 
   useEffect(() => {
     const handleKeyDown = (e) => {
       switch (e.key) {
-        case 'ArrowRight':
-        case ' ':
-          e.preventDefault();
-          handleNext();
-          break;
-        case 'ArrowLeft':
-          e.preventDefault();
-          handlePrev();
-          break;
-        case 'Home':
-          e.preventDefault();
-          handleGoTo(0);
-          break;
-        case 'End':
-          e.preventDefault();
-          handleGoTo(slides.length - 1);
-          break;
-        default:
-          break;
+        case 'ArrowRight': case ' ': e.preventDefault(); handleNext(); break;
+        case 'ArrowLeft': e.preventDefault(); handlePrev(); break;
+        case 'Home': e.preventDefault(); handleGoTo(0); break;
+        case 'End': e.preventDefault(); handleGoTo(slides.length - 1); break;
+        default: break;
       }
     };
-
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleNext, handlePrev, handleGoTo]);
 
   useEffect(() => {
-    const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
-    };
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    const handleFsChange = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener('fullscreenchange', handleFsChange);
+    return () => document.removeEventListener('fullscreenchange', handleFsChange);
   }, []);
 
   const CurrentSlideComponent = slides[currentSlide];
 
   return (
-    <div 
+    <div
       ref={containerRef}
-      className="w-full h-screen bg-gray-50 flex items-center justify-center overflow-hidden relative font-sans"
+      className="w-full h-screen flex items-center justify-center overflow-hidden relative"
+      style={{ background: 'linear-gradient(135deg, #f1f5f9 0%, #e9f5ec 100%)' }}
     >
       <ProgressBar currentSlide={currentSlide} totalSlides={slides.length} />
-      
-      {/* Presentation Container */}
-      <div className="w-full h-full md:max-w-[177.77vh] md:max-h-[56.25vw] relative bg-white shadow-2xl md:rounded-xl overflow-hidden flex flex-col">
+
+      {/* Slide frame */}
+      <div className="slide-bg w-full h-full md:max-w-[177.77vh] md:max-h-[56.25vw] relative shadow-2xl md:rounded-2xl overflow-hidden flex flex-col border border-white/80">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-            className="w-full h-full p-4 sm:p-8 md:p-16 flex flex-col overflow-y-auto hide-scrollbar pb-24 md:pb-16"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+            className="w-full h-full px-8 sm:px-12 md:px-20 py-8 md:py-12 flex flex-col overflow-y-auto hide-scrollbar pb-24 md:pb-20"
           >
             <CurrentSlideComponent onNext={handleNext} onRestart={() => handleGoTo(0)} />
           </motion.div>
@@ -125,8 +83,7 @@ export default function Presentation() {
       </div>
 
       <SlideCounter currentSlide={currentSlide} totalSlides={slides.length} />
-      
-      <SlideNavigation 
+      <SlideNavigation
         currentSlide={currentSlide}
         totalSlides={slides.length}
         onNext={handleNext}

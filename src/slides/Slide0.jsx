@@ -1,76 +1,70 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Users } from 'lucide-react';
+import { Users, ArrowRight } from 'lucide-react';
 import logoImage from '../assets/image.png';
 
 export default function Slide0({ onNext }) {
-  const teamMembers = [
-    "Vun Khemra",
-    "Heng Sombath",
-    "Chan reach"
-  ];
+  const teamMembers = ["Vun Khemra", "Heng Sombath", "Chan reach"];
 
   return (
-    <div className="flex flex-col h-full items-center justify-center text-center">
+    <div className="flex flex-col h-full items-center justify-center text-center gap-8">
+      {/* Logo */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="mb-12 flex flex-col items-center"
+        initial={{ opacity: 0, scale: 0.85 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className="w-32 h-32 md:w-40 md:h-40 bg-white rounded-3xl shadow-lg border border-gray-100 flex items-center justify-center p-3 overflow-hidden"
       >
-        {/* Logo Container */}
-        <div className="w-48 h-48 md:w-56 md:h-56 bg-white rounded-3xl shadow-lg border border-gray-100 flex items-center justify-center p-4 mb-8 overflow-hidden">
-          <img
-            src={logoImage}
-            alt="Spring Education Center Logo"
-            className="w-full h-full object-contain"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = "https://via.placeholder.com/400?text=SPRING+EDUCATION";
-            }}
-          />
-        </div>
-
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 tracking-tight">
-          Assessing Environmental Learning
-        </h1>
+        <img src={logoImage} alt="Spring Education Center Logo" className="w-full h-full object-contain" />
       </motion.div>
 
+      {/* Title block */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.3, duration: 0.5 }}
-        className="bg-eco-light/20 p-8 rounded-3xl shadow-sm border border-eco-light/50 w-full max-w-2xl"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.15 }}
+        className="flex flex-col items-center gap-3"
       >
-        <div className="flex items-center justify-center gap-3 mb-6">
-          <Users className="text-eco-dark" size={28} />
-          <h2 className="text-2xl font-semibold text-gray-700">Presentation Team</h2>
-        </div>
+        <span className="accent-pill">Spring Education Center</span>
+        <h1 className="slide-title max-w-xl">
+          Assessing <span className="text-eco-dark">Environmental</span> Learning
+        </h1>
+        <p className="slide-subtitle max-w-sm">
+          Knowledge · Skills · Attitudes · Behavior
+        </p>
+      </motion.div>
 
-        <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-          {teamMembers.map((member, index) => (
-            <React.Fragment key={index}>
-              <span className="text-xl font-medium text-eco-dark bg-white px-6 py-2 rounded-full shadow-sm border border-gray-100">
-                {member}
-              </span>
-              {index < teamMembers.length - 1 && (
-                <span className="hidden md:block text-gray-300">•</span>
-              )}
-            </React.Fragment>
+      {/* Team */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="flex flex-col items-center gap-4"
+      >
+        <div className="flex items-center gap-2 text-gray-400 text-sm font-medium">
+          <Users size={14} />
+          <span>Presentation Team</span>
+        </div>
+        <div className="flex flex-wrap justify-center gap-2">
+          {teamMembers.map((member, i) => (
+            <span key={i} className="px-4 py-1.5 rounded-full bg-white border border-gray-100 shadow-sm text-gray-700 font-medium text-sm">
+              {member}
+            </span>
           ))}
         </div>
       </motion.div>
 
+      {/* CTA */}
       <motion.button
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+        whileHover={{ scale: 1.04 }}
+        whileTap={{ scale: 0.96 }}
         onClick={onNext}
-        className="mt-12 text-gray-500 hover:text-eco-dark font-medium transition-colors"
+        className="flex items-center gap-2 bg-eco-dark text-white text-sm font-semibold px-6 py-2.5 rounded-full shadow-lg shadow-eco-dark/20 hover:bg-eco-mid transition-colors"
       >
-        Click or press space to begin →
+        Start Presentation <ArrowRight size={15} />
       </motion.button>
     </div>
   );

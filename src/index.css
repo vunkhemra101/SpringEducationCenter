@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,15 +6,42 @@
 
 @layer base {
   body {
-    @apply m-0 p-0 overflow-hidden bg-gray-50 text-gray-800 font-sans;
+    @apply m-0 p-0 overflow-hidden bg-slate-100 text-gray-800;
+    font-family: 'Plus Jakarta Sans', sans-serif;
   }
 }
 
-/* Custom hide scrollbar for certain components if needed */
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Slide background subtle texture */
+.slide-bg {
+  background-color: #ffffff;
+  background-image:
+    radial-gradient(circle at 90% 10%, rgba(187,247,208,0.18) 0%, transparent 55%),
+    radial-gradient(circle at 10% 90%, rgba(187,247,208,0.12) 0%, transparent 55%);
 }
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+
+/* Accent pill */
+.accent-pill {
+  @apply inline-flex items-center gap-1.5 bg-eco-light/30 text-eco-dark text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full border border-eco-light/60;
+}
+
+/* Card base */
+.clean-card {
+  @apply bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300;
+}
+
+/* Section title */
+.slide-title {
+  @apply text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight;
+}
+
+.slide-subtitle {
+  @apply text-lg text-gray-500 leading-relaxed font-normal;
+}
+
+/* Number badge */
+.num-badge {
+  @apply flex-shrink-0 w-10 h-10 rounded-xl bg-eco-light/40 text-eco-dark font-bold text-sm flex items-center justify-center;
 }

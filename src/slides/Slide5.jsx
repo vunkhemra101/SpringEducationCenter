@@ -1,71 +1,71 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { BookOpen, Wrench, Heart, Activity } from 'lucide-react';
+
+const dimensions = [
+  { icon: BookOpen, label: 'Knowledge', pct: 25, color: '#3b82f6', lightColor: '#eff6ff' },
+  { icon: Wrench,   label: 'Skills',    pct: 25, color: '#f97316', lightColor: '#fff7ed' },
+  { icon: Heart,    label: 'Attitudes', pct: 25, color: '#ec4899', lightColor: '#fdf2f8' },
+  { icon: Activity, label: 'Behavior',  pct: 25, color: '#22c55e', lightColor: '#f0fdf4' },
+];
 
 export default function Slide5() {
-  const segments = [
-    { label: "Knowledge", color: "bg-blue-500", text: "text-blue-900" },
-    { label: "Skills", color: "bg-orange-500", text: "text-orange-900" },
-    { label: "Attitudes", color: "bg-pink-500", text: "text-pink-900" },
-    { label: "Behavior", color: "bg-green-500", text: "text-green-900" }
-  ];
-
   return (
-    <div className="flex flex-col h-full justify-center items-center">
-      <motion.h2 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center"
-      >
-        What Should We Assess?
-      </motion.h2>
-
-      <div className="relative w-72 h-72 md:w-96 md:h-96 flex items-center justify-center my-8">
-        {/* Animated Circular Segments (Stylized using absolute positioning) */}
-        {segments.map((segment, index) => {
-          const rotation = index * 90;
-          return (
-            <motion.div
-              key={index}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.2 + index * 0.1, type: "spring" }}
-              className="absolute inset-0 flex justify-center"
-              style={{ transform: `rotate(${rotation}deg)` }}
-            >
-              <div 
-                className={`w-32 h-32 md:w-44 md:h-44 ${segment.color} opacity-20 rounded-full mt-[-20px] md:mt-[-30px] shadow-lg`} 
-              />
-              <div 
-                className={`absolute top-4 md:top-6 font-bold ${segment.text} text-lg md:text-xl`}
-                style={{ transform: `rotate(-${rotation}deg)` }}
-              >
-                {segment.label}
-              </div>
-            </motion.div>
-          );
-        })}
-
-        {/* Center Node */}
-        <motion.div 
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.6, type: "spring", bounce: 0.5 }}
-          className="absolute z-10 w-40 h-40 md:w-48 md:h-48 bg-white rounded-full flex flex-col items-center justify-center shadow-xl border-4 border-eco-light/50"
+    <div className="flex flex-col h-full justify-center gap-10">
+      {/* Header */}
+      <div className="text-center">
+        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="accent-pill mb-4 inline-flex">
+          Scope
+        </motion.span>
+        <motion.h2
+          initial={{ opacity: 0, y: -16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="slide-title mt-3"
         >
-          <span className="text-center font-bold text-eco-dark text-xl md:text-2xl leading-tight px-4">
-            Environmental<br/>Learning
-          </span>
-        </motion.div>
+          What Should We Assess?
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="slide-subtitle max-w-xl mx-auto mt-3"
+        >
+          Environmental assessment measures more than academic knowledge alone.
+        </motion.p>
       </div>
 
-      <motion.p 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8 }}
-        className="text-xl text-gray-600 text-center max-w-2xl bg-eco-light/20 p-6 rounded-2xl border border-eco-light/50 mt-4"
-      >
-        Environmental assessment should measure more than academic knowledge.
-      </motion.p>
+      {/* Horizontal bar chart */}
+      <div className="max-w-2xl mx-auto w-full flex flex-col gap-3">
+        {dimensions.map((d, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.25 + i * 0.1 }}
+            className="clean-card p-4 flex items-center gap-4"
+          >
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: d.lightColor }}>
+              <d.icon size={18} style={{ color: d.color }} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex justify-between mb-1.5">
+                <span className="text-sm font-semibold text-gray-700">{d.label}</span>
+                <span className="text-xs text-gray-400 font-medium">25%</span>
+              </div>
+              <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: '100%' }}
+                  transition={{ delay: 0.4 + i * 0.1, duration: 0.7, ease: 'easeOut' }}
+                  className="h-full rounded-full"
+                  style={{ background: d.color }}
+                />
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 }
