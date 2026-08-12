@@ -74,7 +74,6 @@ export default function SlideVideo({ onNext }) {
         playsInline
         className="w-full h-full object-contain"
         src="/bg-video.mp4"
-        onEnded={onNext}
       />
 
       {/* Bottom controls */}
