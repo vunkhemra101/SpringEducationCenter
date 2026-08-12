@@ -40,8 +40,8 @@ export default function Presentation() {
   useEffect(() => {
     const handleKeyDown = (e) => {
       switch (e.key) {
-        case 'ArrowRight': case ' ': e.preventDefault(); handleNext(); break;
-        case 'ArrowLeft': e.preventDefault(); handlePrev(); break;
+        case 'ArrowRight': case ' ': case 'PageDown': e.preventDefault(); handleNext(); break;
+        case 'ArrowLeft': case 'PageUp': e.preventDefault(); handlePrev(); break;
         case 'Home': e.preventDefault(); handleGoTo(0); break;
         case 'End': e.preventDefault(); handleGoTo(slides.length - 1); break;
         default: break;
