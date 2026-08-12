@@ -68,6 +68,19 @@ export default function Presentation() {
 
       {/* Slide frame */}
       <div className="slide-bg w-full h-full md:max-w-[177.77vh] md:max-h-[56.25vw] relative shadow-2xl md:rounded-2xl overflow-hidden flex flex-col border border-white/80">
+
+        {/* Background video */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0 opacity-10"
+          src="/bg-video.mp4"
+        />
+        {/* Overlay to keep content readable */}
+        <div className="absolute inset-0 bg-white/85 z-0" />
+
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
@@ -75,7 +88,7 @@ export default function Presentation() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-            className="w-full h-full px-8 sm:px-12 md:px-20 py-8 md:py-12 flex flex-col overflow-y-auto hide-scrollbar pb-24 md:pb-20"
+            className="relative z-10 w-full h-full px-8 sm:px-12 md:px-20 py-8 md:py-12 flex flex-col overflow-y-auto hide-scrollbar pb-24 md:pb-20"
           >
             <CurrentSlideComponent onNext={handleNext} onRestart={() => handleGoTo(0)} />
           </motion.div>
