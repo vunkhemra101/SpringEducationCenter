@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Users } from 'lucide-react';
+import logoImage from '../assets/image.png';
 
 export default function Slide0({ onNext }) {
   const teamMembers = [
@@ -20,7 +21,7 @@ export default function Slide0({ onNext }) {
         {/* Logo Container */}
         <div className="w-48 h-48 md:w-56 md:h-56 bg-white rounded-3xl shadow-lg border border-gray-100 flex items-center justify-center p-4 mb-8 overflow-hidden">
           <img
-            src="/src/assets/image.png"
+            src={logoImage}
             alt="Spring Education Center Logo"
             className="w-full h-full object-contain"
             onError={(e) => {
