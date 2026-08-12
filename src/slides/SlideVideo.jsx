@@ -9,13 +9,20 @@ export default function SlideVideo({ onNext }) {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
 
+  // Fix: React doesn't correctly apply the muted attribute on video elements
+  // Must set it directly via ref
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.defaultMuted = true;
+    }
+  }, []);
+
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-
     const onTimeUpdate = () => setProgress((video.currentTime / video.duration) * 100);
     const onLoadedMetadata = () => setDuration(video.duration);
-
     video.addEventListener('timeupdate', onTimeUpdate);
     video.addEventListener('loadedmetadata', onLoadedMetadata);
     return () => {
@@ -25,14 +32,16 @@ export default function SlideVideo({ onNext }) {
   }, []);
 
   const togglePlay = () => {
-    if (!videoRef.current) return;
-    if (playing) { videoRef.current.pause(); } else { videoRef.current.play(); }
+    const video = videoRef.current;
+    if (!video) return;
+    if (playing) { video.pause(); } else { video.play(); }
     setPlaying(!playing);
   };
 
   const toggleMute = () => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = !muted;
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = !muted;
     setMuted(!muted);
   };
 
@@ -46,46 +55,50 @@ export default function SlideVideo({ onNext }) {
   const elapsed = videoRef.current ? (progress / 100) * duration : 0;
 
   return (
+    // Fixed: uses fixed positioning to escape parent overflow/padding on mobile
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="absolute inset-0 z-20 bg-black flex flex-col items-center justify-center gap-0"
+      className="absolute inset-0 z-20 bg-black flex flex-col"
+      style={{ margin: 0, padding: 0 }}
     >
       {/* Top bar */}
-      <div className="w-full flex items-center justify-between px-8 py-4 absolute top-0 left-0 z-30"
-        style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)' }}
+      <div
+        className="w-full flex items-center justify-between px-5 py-3 flex-shrink-0"
+        style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.7), transparent)', position: 'absolute', top: 0, left: 0, right: 0, zIndex: 10 }}
       >
-        <span className="text-white/80 text-sm font-semibold tracking-wide uppercase">📽 Video</span>
+        <span className="text-white/80 text-sm font-semibold tracking-wide">📽 Video</span>
         <motion.button
-          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={onNext}
-          className="flex items-center gap-2 bg-white/15 hover:bg-white/25 backdrop-blur-sm border border-white/20 text-white text-sm font-semibold px-5 py-2 rounded-full transition-colors"
+          className="flex items-center gap-2 bg-white/20 active:bg-white/30 border border-white/20 text-white text-sm font-semibold px-4 py-2 rounded-full"
         >
-          Skip Video <SkipForward size={15} />
+          Skip <SkipForward size={14} />
         </motion.button>
       </div>
 
-      {/* Video */}
+      {/* Video — fills all available space */}
       <video
         ref={videoRef}
         playsInline
-        muted
-        className="w-full h-full object-contain"
+        webkit-playsinline="true"
+        preload="metadata"
+        className="w-full flex-1 min-h-0"
+        style={{ objectFit: 'contain', background: '#000', display: 'block' }}
         src="/bg-video.mp4"
       />
 
       {/* Bottom controls */}
       <div
-        className="w-full absolute bottom-0 left-0 z-30 flex flex-col gap-3 px-8 pb-6 pt-10"
-        style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)' }}
+        className="w-full flex-shrink-0 flex flex-col gap-2 px-5 pb-5 pt-8"
+        style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 10 }}
       >
         {/* Progress bar */}
-        <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden">
+        <div className="w-full h-1.5 bg-white/20 rounded-full overflow-hidden">
           <div
-            className="h-full bg-white rounded-full transition-all duration-200"
-            style={{ width: `${progress}%` }}
+            className="h-full bg-white rounded-full"
+            style={{ width: `${progress}%`, transition: 'width 0.2s linear' }}
           />
         </div>
 
@@ -95,17 +108,17 @@ export default function SlideVideo({ onNext }) {
             {/* Play / Pause */}
             <button
               onClick={togglePlay}
-              className="w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 border border-white/20 flex items-center justify-center text-white transition-colors"
+              className="w-11 h-11 rounded-full bg-white/20 active:bg-white/30 border border-white/20 flex items-center justify-center text-white"
             >
-              {playing ? <Pause size={18} /> : <Play size={18} />}
+              {playing ? <Pause size={20} /> : <Play size={20} />}
             </button>
 
             {/* Mute */}
             <button
               onClick={toggleMute}
-              className="w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 border border-white/20 flex items-center justify-center text-white transition-colors"
+              className="w-11 h-11 rounded-full bg-white/20 active:bg-white/30 border border-white/20 flex items-center justify-center text-white"
             >
-              {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+              {muted ? <VolumeX size={20} /> : <Volume2 size={20} />}
             </button>
 
             {/* Time */}
@@ -114,15 +127,13 @@ export default function SlideVideo({ onNext }) {
             </span>
           </div>
 
-          {/* Skip button bottom-right */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          {/* Skip right */}
+          <button
             onClick={onNext}
-            className="flex items-center gap-1.5 bg-white/15 hover:bg-white/25 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold px-4 py-2 rounded-full transition-colors"
+            className="flex items-center gap-1 bg-white/20 active:bg-white/30 border border-white/20 text-white text-xs font-semibold px-4 py-2 rounded-full"
           >
             <SkipForward size={14} /> Skip
-          </motion.button>
+          </button>
         </div>
       </div>
     </motion.div>
