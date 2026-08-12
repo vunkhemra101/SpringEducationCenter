@@ -5,7 +5,7 @@ import { Play, Pause, Volume2, VolumeX, SkipForward } from 'lucide-react';
 export default function SlideVideo({ onNext }) {
   const videoRef = useRef(null);
   const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(false);
+  const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
 
@@ -71,6 +71,7 @@ export default function SlideVideo({ onNext }) {
       <video
         ref={videoRef}
         playsInline
+        muted
         className="w-full h-full object-contain"
         src="/bg-video.mp4"
       />
