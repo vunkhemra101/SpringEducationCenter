@@ -7,6 +7,7 @@ import SlideCounter from './SlideCounter';
 
 import Slide0 from '../slides/Slide0';
 import Slide1 from '../slides/Slide1';
+import Slide1b from '../slides/Slide1b';
 import Slide2 from '../slides/Slide2';
 import Slide3 from '../slides/Slide3';
 import Slide4 from '../slides/Slide4';
@@ -17,7 +18,7 @@ import Slide8 from '../slides/Slide8';
 import Slide9 from '../slides/Slide9';
 import SlideVideo from '../slides/SlideVideo';
 
-const slides = [Slide0, Slide1, Slide2, Slide3, Slide4, Slide5, Slide6, Slide7, Slide8, SlideVideo, Slide9];
+const slides = [Slide0, Slide1, Slide1b, Slide2, Slide3, Slide4, Slide5, Slide6, Slide7, Slide8, SlideVideo, Slide9];
 
 export default function Presentation() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -70,17 +71,7 @@ export default function Presentation() {
       {/* Slide frame */}
       <div className="slide-bg w-full h-full md:max-w-[177.77vh] md:max-h-[56.25vw] relative shadow-2xl md:rounded-2xl overflow-hidden flex flex-col border border-white/80">
 
-        {/* Background video */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-40"
-          src="/bg-video.mp4"
-        />
-        {/* Overlay to keep content readable */}
-        <div className="absolute inset-0 bg-white/55 z-0" />
+
 
         <AnimatePresence mode="wait">
           <motion.div
